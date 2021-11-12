@@ -7,9 +7,6 @@ daysInWeek2 = [8, 9, 10, 11, 12, 13, 14];
 daysInWeek3 = [15, 16, 17, 18, 19, 20, 21];
 daysInWeek4 = [22, 23, 24, 25, 26, 27, 0];
 
-console.log("Seed date is " + seedDate)
-console.log("Today is " + today)
-
 function getWeekCycle (date) {
 
     dateDiff = Math.floor((today - seedDate) /(1000 * 60 * 60 * 24));
@@ -34,40 +31,58 @@ function getWeekCycle (date) {
 var cycleWeek = getWeekCycle(seedDate);
 console.log("Current week in the cycle: " + cycleWeek);
 
-// Constructor to create new person
-var Person = function (ID, name) {
-    this.ID = ID;
-    this.name = name;
 
-    this.showPerson = function () {
-        console.log("Person " + this.ID + ": " + this.name);
-    }
-
-    // this.getJob = function (seedDate) {
-
-    // }
+// Create array of cleaners
+// cleaners = [new Person(1, "Jack"), new Person(2, "Faith")]
+cleaners = {
+    1 : "Jack",
+    2 : "Faith"
 }
 
-var person1 = new Person(1, "Jack");
-var person2 = new Person(2, "Faith");
-// person1.showPerson();
-// person2.showPerson();
+var kitchenClean =  function (week) {
 
-var Room = function (ID, name, firstCleaner, secondCleaner, roomWeek) {
-    this.ID = ID;
-    this.name = name;
+     if ([1, 2].includes(week)) {
+         cleanerID = 1;
+     } else if ([3, 4].includes(week)) {
+         cleanerID = 2;
+     };
 
-    this.schedule = {
-        1 : {"PersonID" : firstCleaner, "Level" : "Deep"},
-        2 : {"PersonID" : firstCleaner, "Level" : "Quick"},
-        3 : {"PersonID" : secondCleaner, "Level" : "Deep"},
-        4 : {"PersonID" : secondCleaner, "Level" : "Quick"}
+     if ([1, 3].includes(week)) {
+        cleanLevel = "deep";
+     } else if ([2, 4].includes(week)) {
+        cleanLevel = "quick";
+     }
+
+     return _kitchenClean = {
+         cleanerID : cleanerID,
+         cleanerName : cleaners[cleanerID],
+         cleanLevel : cleanLevel
+     };
+};
+
+var bathroomClean =  function (week) {
+
+    if ([1, 2].includes(week)) {
+        cleanerID = 2;
+    } else if ([3, 4].includes(week)) {
+        cleanerID = 1;
     };
 
-    // Need to think about the logic for this method, or if it is necessary.
-    // var.whoIsCleaning = function (roomWeek) {
-    //     if (roomWeek == 1) {
-    //         roomCleaner = Personschedule[1]["PersonID"]
-    //     }
-    // }
-}
+    if ([1, 3].includes(week)) {
+       cleanLevel = "deep";
+    } else if ([2, 4].includes(week)) {
+       cleanLevel = "quick";
+    }
+
+    return _bathroomClean = {
+        cleanerID : cleanerID,
+        cleanerName : cleaners[cleanerID],
+        cleanLevel : cleanLevel
+    };
+};
+
+kitchenClean1 = kitchenClean(cycleWeek);
+console.log("Kitchen being " + kitchenClean1.cleanLevel + " cleaned by " + kitchenClean1.cleanerName);
+
+bathroomClean1 = bathroomClean(cycleWeek);
+console.log("Bathroom being " + bathroomClean1.cleanLevel + " cleaned by " + bathroomClean1.cleanerName);
