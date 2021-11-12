@@ -38,7 +38,9 @@ cleaners = {
     2 : "Faith"
 }
 
-var room = function (firstCleaner, secondCleaner, week) {
+var room = function (roomName, firstCleaner, secondCleaner, week) {
+    this.roomName = roomName;
+
     // Each cleaner cleans each room 2 weeks in a row
     if ([1, 2].includes(week)) {
         this.cleanerID = firstCleaner;
@@ -54,10 +56,15 @@ var room = function (firstCleaner, secondCleaner, week) {
     }
 
     this.cleanerName = cleaners[this.cleanerID];
+
+    this.whoIsCleaning = function () {
+        // var whoIsCleaningString = this.roomName + " being " + this.cleanLevel + " cleaned by " + this.cleanerName;
+        return this.roomName + " being " + this.cleanLevel + " cleaned by " + this.cleanerName;
+    }
 };
 
-kitchen = new room(1, 2, cycleWeek);
-bathroom = new room(2, 1, cycleWeek);
+kitchen = new room('Kitchen', 1, 2, cycleWeek);
+bathroom = new room('Bathroom', 2, 1, cycleWeek);
 
-console.log("Kitchen being " + kitchen.cleanLevel + " cleaned by " + kitchen.cleanerName);
-console.log("Bathroom being " + bathroom.cleanLevel + " cleaned by " + bathroom.cleanerName);
+console.log(kitchen.whoIsCleaning());
+console.log(bathroom.whoIsCleaning());
