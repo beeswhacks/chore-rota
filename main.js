@@ -33,56 +33,31 @@ console.log("Current week in the cycle: " + cycleWeek);
 
 
 // Create array of cleaners
-// cleaners = [new Person(1, "Jack"), new Person(2, "Faith")]
 cleaners = {
     1 : "Jack",
     2 : "Faith"
 }
 
-var kitchenClean =  function (week) {
-
-     if ([1, 2].includes(week)) {
-         cleanerID = 1;
-     } else if ([3, 4].includes(week)) {
-         cleanerID = 2;
-     };
-
-     if ([1, 3].includes(week)) {
-        cleanLevel = "deep";
-     } else if ([2, 4].includes(week)) {
-        cleanLevel = "quick";
-     }
-
-     return _kitchenClean = {
-         cleanerID : cleanerID,
-         cleanerName : cleaners[cleanerID],
-         cleanLevel : cleanLevel
-     };
-};
-
-var bathroomClean =  function (week) {
-
+var room = function (firstCleaner, secondCleaner, week) {
+    // Each cleaner cleans each room 2 weeks in a row
     if ([1, 2].includes(week)) {
-        cleanerID = 2;
+        this.cleanerID = firstCleaner;
     } else if ([3, 4].includes(week)) {
-        cleanerID = 1;
+        this.cleanerID = secondCleaner;
     };
 
+    // And alternates between a deep clean and a quick clean each week
     if ([1, 3].includes(week)) {
-       cleanLevel = "deep";
+       this.cleanLevel = "deep";
     } else if ([2, 4].includes(week)) {
-       cleanLevel = "quick";
+       this.cleanLevel = "quick";
     }
 
-    return _bathroomClean = {
-        cleanerID : cleanerID,
-        cleanerName : cleaners[cleanerID],
-        cleanLevel : cleanLevel
-    };
+    this.cleanerName = cleaners[this.cleanerID];
 };
 
-kitchenClean1 = kitchenClean(cycleWeek);
-console.log("Kitchen being " + kitchenClean1.cleanLevel + " cleaned by " + kitchenClean1.cleanerName);
+kitchen = new room(1, 2, cycleWeek);
+bathroom = new room(2, 1, cycleWeek);
 
-bathroomClean1 = bathroomClean(cycleWeek);
-console.log("Bathroom being " + bathroomClean1.cleanLevel + " cleaned by " + bathroomClean1.cleanerName);
+console.log("Kitchen being " + kitchen.cleanLevel + " cleaned by " + kitchen.cleanerName);
+console.log("Bathroom being " + bathroom.cleanLevel + " cleaned by " + bathroom.cleanerName);
