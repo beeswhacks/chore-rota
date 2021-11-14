@@ -1,4 +1,4 @@
-// seedDate should be the Sunday before week 1 starts (if Monday is the first day of the week)
+// seedDate should be the day before week 1 starts (e.g. Sunday 2nd, if Monday 1st is the first day of week 1)
 var seedDate = new Date("2021-10-31");
 var today = new Date(Date.now());
 
@@ -12,7 +12,7 @@ function getWeekCycle (date) {
     dateDiff = Math.floor((today - seedDate) /(1000 * 60 * 60 * 24));
 
     // Rota completes a cycle in 4 weeks. 7 * 4 = number of days in a cycle.
-    // dateDiff % (7 * 4) is therefore number of days since current cycle started.
+    // dateDiff % (7 * 4) is therefore number of complete days since current cycle started.
     daysSinceCycleStart = dateDiff % (7 * 4);
     console.log("Days since cycle started: " + daysSinceCycleStart);
 
@@ -36,7 +36,7 @@ console.log("Current week in the cycle: " + cycleWeek);
 cleaners = {
     1 : "Jack",
     2 : "Faith"
-}
+};
 
 var room = function (roomName, firstCleaner, secondCleaner, week) {
     this.roomName = roomName;
