@@ -1,3 +1,7 @@
+var kitchenPara = document.getElementById("kitchen");
+var bathroomPara = document.getElementById("bathroom");
+var footerPara = document.getElementById("footerPara");
+
 // seedDate should be the day before week 1 starts (e.g. Sunday 2nd, if Monday 1st is the first day of week 1)
 var seedDate = new Date("2021-10-31");
 var today = new Date(Date.now());
@@ -6,6 +10,16 @@ daysInWeek1 = [1, 2, 3, 4, 5, 6, 7];
 daysInWeek2 = [8, 9, 10, 11, 12, 13, 14];
 daysInWeek3 = [15, 16, 17, 18, 19, 20, 21];
 daysInWeek4 = [22, 23, 24, 25, 26, 27, 0];
+
+// Create text for footer showing today's date 
+var dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+footerPara.innerHTML = "Today's date: " + today.toLocaleDateString('en-GB', dateOptions);
+
+// Create array of cleaners
+cleaners = {
+    1 : "Jack",
+    2 : "Faith"
+};
 
 function getWeekCycle (date) {
 
@@ -29,42 +43,36 @@ function getWeekCycle (date) {
     return cycleWeek;
 };
 var cycleWeek = getWeekCycle(seedDate);
-console.log("Current week in the cycle: " + cycleWeek);
 
+class room {
+    constructor(roomName, firstCleaner, secondCleaner, week) {
+        this.roomName = roomName;
 
-// Create array of cleaners
-cleaners = {
-    1 : "Jack",
-    2 : "Faith"
-};
+        // Each cleaner cleans each room 2 weeks in a row
+        if ([1, 2].includes(week)) {
+            this.cleanerID = firstCleaner;
+        } else if ([3, 4].includes(week)) {
+            this.cleanerID = secondCleaner;
+        };
 
-var room = function (roomName, firstCleaner, secondCleaner, week) {
-    this.roomName = roomName;
+        // And alternates between a deep clean and a quick clean each week
+        if ([1, 3].includes(week)) {
+            this.cleanLevel = "deep";
+        } else if ([2, 4].includes(week)) {
+            this.cleanLevel = "quick";
+        }
 
-    // Each cleaner cleans each room 2 weeks in a row
-    if ([1, 2].includes(week)) {
-        this.cleanerID = firstCleaner;
-    } else if ([3, 4].includes(week)) {
-        this.cleanerID = secondCleaner;
-    };
+        this.cleanerName = cleaners[this.cleanerID];
 
-    // And alternates between a deep clean and a quick clean each week
-    if ([1, 3].includes(week)) {
-       this.cleanLevel = "deep";
-    } else if ([2, 4].includes(week)) {
-       this.cleanLevel = "quick";
-    }
-
-    this.cleanerName = cleaners[this.cleanerID];
-
-    this.whoIsCleaning = function () {
-        // var whoIsCleaningString = this.roomName + " being " + this.cleanLevel + " cleaned by " + this.cleanerName;
-        return this.roomName + " being " + this.cleanLevel + " cleaned by " + this.cleanerName;
+        this.whoIsCleaning = function () {
+            // var whoIsCleaningString = this.roomName + " being " + this.cleanLevel + " cleaned by " + this.cleanerName;
+            return this.roomName + " being " + this.cleanLevel + " cleaned by " + this.cleanerName;
+        };
     }
 };
 
 kitchen = new room('Kitchen', 1, 2, cycleWeek);
 bathroom = new room('Bathroom', 2, 1, cycleWeek);
 
-console.log(kitchen.whoIsCleaning());
-console.log(bathroom.whoIsCleaning());
+kitchenPara.innerHTML = kitchen.whoIsCleaning();
+bathroomPara.innerHTML = bathroom.whoIsCleaning();
