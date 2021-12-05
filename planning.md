@@ -20,4 +20,5 @@
 2. What kind of clean is it? Use method in rooms object to get person to clean and level of clean
 
 ### Dev ideas
-- Add schedule type (alternating, fixed) and cleaning frequency so it can figure out schedules automatically
+- Add schedule type (alternating, fixed) and cleaning frequency so it can figure out schedules automatically.
+- Store rooms in an array so that any number of rooms can be accounted for. Build the HTML for each room in JavaScript.
