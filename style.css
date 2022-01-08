@@ -1,36 +1,51 @@
 * {
     font-family: Helvetica, sans-serif;
+    font-size-adjust: none;
+    box-sizing: border-box;
 }
 
 body {
     background-color: lightblue;
+    padding-left: 0;
+    padding-right: 0;
+    width: 100vw;
   }
 
-h1 {
+header {
     text-align: center;
     color: whitesmoke;
-    border:2px solid whitesmoke;
+    border-bottom: 2px solid whitesmoke;;
     background-color: teal;
     line-height: 1.5;
     letter-spacing: 0.8px;
-    font-size: 4vw;
+    font-size: 24pt;
+    padding-top: 0.5%;
+}
+
+h2 {
+  margin: auto;
+  text-align: center;
 }
 
 #kitchen, #bathroom {
     text-align: center;
     background-color: whitesmoke;
     padding: 8px;
-    font-size: 2vw;
+    font-size: 12pt;
+    min-width: fit-content;
+    width: 80vw;
+    margin-left: 10vw;
+    margin-right: 10vw;
   }
 
 #footer {
     position: absolute;
     bottom: 0;
     left: 0;
-    width: 100%;
+    width: 100vw;
     height: 50px;
     background: linen;
     text-align: center;
-    font-size: 2vw;
+    font-size: 12pt;
     border-top-style: solid;
 }
