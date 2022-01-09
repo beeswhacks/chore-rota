@@ -6,9 +6,7 @@
 
 body {
     background-color: lightblue;
-    padding-left: 0;
-    padding-right: 0;
-    width: 100vw;
+    margin: 0;
   }
 
 header {
@@ -19,7 +17,8 @@ header {
     line-height: 1.5;
     letter-spacing: 0.8px;
     font-size: 24pt;
-    padding-top: 0.5%;
+    padding: 0.5vw;
+    margin: 0;
 }
 
 h2 {
@@ -42,6 +41,7 @@ h2 {
     position: absolute;
     bottom: 0;
     left: 0;
+    right: 0;
     width: 100vw;
     height: 50px;
     background: linen;
