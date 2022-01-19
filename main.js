@@ -1,5 +1,5 @@
-var kitchenPara = document.getElementById("kitchen");
-var bathroomPara = document.getElementById("bathroom");
+var faithPara = document.getElementById("Faith");
+var jackPara = document.getElementById("Jack");
 var footerPara = document.getElementById("footerPara");
 
 // seedDate should be the day before week 1 starts (e.g. Sunday 2nd, if Monday 1st is the first day of week 1)
@@ -11,15 +11,14 @@ daysInWeek2 = [8, 9, 10, 11, 12, 13, 14];
 daysInWeek3 = [15, 16, 17, 18, 19, 20, 21];
 daysInWeek4 = [22, 23, 24, 25, 26, 27, 0];
 
+var startWeek1 = daysInWeek1[0];
+var startWeek2 = daysInWeek2[0];
+var startWeek3 = daysInWeek3[0];
+var startWeek4 = daysInWeek4[0];
+
 // Create text for footer showing today's date 
 var dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 footerPara.innerHTML = "Today's date: " + today.toLocaleDateString('en-GB', dateOptions);
-
-// Create array of cleaners
-cleaners = {
-    1 : "Jack",
-    2 : "Faith"
-};
 
 function getWeekCycle (date) {
 
@@ -30,19 +29,29 @@ function getWeekCycle (date) {
     daysSinceCycleStart = dateDiff % (7 * 4);
     console.log("Days since cycle started: " + daysSinceCycleStart);
 
-    if (daysSinceCycleStart >= daysInWeek1[0] && daysSinceCycleStart <= daysInWeek1[daysInWeek1.length - 1]) {
+    if (daysSinceCycleStart >= startWeek1 && daysSinceCycleStart < startWeek2) {
         cycleWeek = 1;
-    } else if (daysSinceCycleStart >= daysInWeek2[0] && daysSinceCycleStart <= daysInWeek2[daysInWeek2.length - 1]) {
+    } else if (daysSinceCycleStart >= startWeek2 && daysSinceCycleStart < startWeek3) {
         cycleWeek = 2;
-    } else if (daysSinceCycleStart >= daysInWeek3[0] && daysSinceCycleStart <= daysInWeek3[daysInWeek3.length - 1]) {
+    } else if (daysSinceCycleStart >= startWeek3 && daysSinceCycleStart < startWeek4) {
         cycleWeek = 3;
-    } else if ((daysSinceCycleStart >= daysInWeek4[0] && daysSinceCycleStart <= daysInWeek4[daysInWeek4.length - 1]) || daysSinceCycleStart == 0) {
+    } else if (daysSinceCycleStart >= startWeek4 || daysSinceCycleStart == 0) {
         cycleWeek = 4;
-    };
+    }
 
     return cycleWeek;
 };
+
 var cycleWeek = getWeekCycle(seedDate);
+
+// Assign each cleaner an ID to prevent names being hard written into code
+cleaners = {
+    1 : "Jack",
+    2 : "Faith"
+};
+
+// Create empty rooms array. Each room will be added to the array by the room constructor.
+var rooms = [];
 
 class room {
     constructor(roomName, firstCleaner, secondCleaner, week) {
@@ -53,9 +62,9 @@ class room {
             this.cleanerID = firstCleaner;
         } else if ([3, 4].includes(week)) {
             this.cleanerID = secondCleaner;
-        };
+        }
 
-        // And alternates between a deep clean and a quick clean each week
+        // Each cleaner alternates between a deep clean and a quick clean each week
         if ([1, 3].includes(week)) {
             this.cleanLevel = "deep";
         } else if ([2, 4].includes(week)) {
@@ -64,15 +73,33 @@ class room {
 
         this.cleanerName = cleaners[this.cleanerID];
 
-        this.whoIsCleaning = function () {
-            // var whoIsCleaningString = this.roomName + " being " + this.cleanLevel + " cleaned by " + this.cleanerName;
-            return this.roomName + " being " + this.cleanLevel + " cleaned by " + this.cleanerName;
-        };
+        rooms.push(this);
     }
 };
 
 kitchen = new room('Kitchen', 1, 2, cycleWeek);
 bathroom = new room('Bathroom', 2, 1, cycleWeek);
 
-kitchenPara.innerHTML = kitchen.whoIsCleaning();
-bathroomPara.innerHTML = bathroom.whoIsCleaning();
+class cleaner {
+    constructor(name, ID) {
+        this.name = name;
+        this.ID = ID;
+    }
+
+    getCleaningString() {
+        var cleaningString = 'This week:<ul>';
+        rooms.forEach(element => {
+            if (this.ID == element.cleanerID) {
+                cleaningString += '<li>' + element.roomName + ', ' + element.cleanLevel + ' clean.</li>';
+            }
+        })
+        cleaningString += '</ul>';
+        return cleaningString;
+    }
+}
+
+jack = new cleaner('Jack', 1);
+faith = new cleaner('Faith', 2);
+
+jackPara.innerHTML = jack.getCleaningString();
+faithPara.innerHTML = faith.getCleaningString();
