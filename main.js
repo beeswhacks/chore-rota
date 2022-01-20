@@ -33,7 +33,6 @@ function getWeekCycle (date) {
     // Rota completes a cycle in 4 weeks. 7 * 4 = number of days in a cycle.
     // dayDiff % (7 * 4) is therefore number of complete days since current cycle started.
     daysSinceCycleStart = dayDiff % daysInCycle;
-    console.log("Days since cycle started: " + daysSinceCycleStart);
 
     if (daysSinceCycleStart >= startWeek1 && daysSinceCycleStart < startWeek2) {
         cycleWeek = 1;
@@ -43,6 +42,8 @@ function getWeekCycle (date) {
         cycleWeek = 3;
     } else if (daysSinceCycleStart >= startWeek4 || daysSinceCycleStart == 0) {
         cycleWeek = 4;
+    } else {
+        console.log("cycleWeek could not be determined. daysSinceCycleStart: " + daysSinceCycleStart);
     }
 
     return cycleWeek;
