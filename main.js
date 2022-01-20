@@ -16,17 +16,23 @@ var startWeek2 = daysInWeek2[0];
 var startWeek3 = daysInWeek3[0];
 var startWeek4 = daysInWeek4[0];
 
+// Rota is on a 4 week cycle, so (7 * 4) days in each cycle
+var daysInCycle = 7 * 4;
+
+// JavaScript stores date objects as milliseconds, so will need number of milliseconds in a day
+var millisecondsInADay = 1000 * 60 * 60 * 24;
+
 // Create text for footer showing today's date 
 var dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 footerPara.innerHTML = "Today's date: " + today.toLocaleDateString('en-GB', dateOptions);
 
 function getWeekCycle (date) {
 
-    dateDiff = Math.floor((today - seedDate) /(1000 * 60 * 60 * 24));
+    dayDiff = Math.floor((today - seedDate) / millisecondsInADay);
 
     // Rota completes a cycle in 4 weeks. 7 * 4 = number of days in a cycle.
-    // dateDiff % (7 * 4) is therefore number of complete days since current cycle started.
-    daysSinceCycleStart = dateDiff % (7 * 4);
+    // dayDiff % (7 * 4) is therefore number of complete days since current cycle started.
+    daysSinceCycleStart = dayDiff % daysInCycle;
     console.log("Days since cycle started: " + daysSinceCycleStart);
 
     if (daysSinceCycleStart >= startWeek1 && daysSinceCycleStart < startWeek2) {
