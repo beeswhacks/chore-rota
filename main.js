@@ -2,8 +2,8 @@ var faithPara = document.getElementById("Faith");
 var jackPara = document.getElementById("Jack");
 var footerPara = document.getElementById("footerPara");
 
-// seedDate should be the day before week 1 starts (e.g. Sunday 2nd, if Monday 1st is the first day of week 1)
-var seedDate = new Date("2021-10-31");
+// cycleStartDate should be the day before week 1 starts (e.g. Sunday 2nd, if Monday 1st is the first day of week 1)
+var cycleStartDate = new Date("2021-10-31");
 var today = new Date(Date.now());
 
 daysInWeek1 = [1, 2, 3, 4, 5, 6, 7];
@@ -28,7 +28,7 @@ footerPara.innerHTML = "Today's date: " + today.toLocaleDateString('en-GB', date
 
 function getWeekCycle (date) {
 
-    dayDiff = Math.floor((today - seedDate) / millisecondsInADay);
+    dayDiff = Math.floor((today - cycleStartDate) / millisecondsInADay);
 
     // Rota completes a cycle in 4 weeks. 7 * 4 = number of days in a cycle.
     // dayDiff % (7 * 4) is therefore number of complete days since current cycle started.
@@ -48,7 +48,7 @@ function getWeekCycle (date) {
     return cycleWeek;
 };
 
-var cycleWeek = getWeekCycle(seedDate);
+var cycleWeek = getWeekCycle(cycleStartDate);
 
 // Assign each cleaner an ID to prevent names being hard written into code
 cleaners = {
