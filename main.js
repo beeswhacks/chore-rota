@@ -1,5 +1,7 @@
-var faithPara = document.getElementById("Faith");
-var jackPara = document.getElementById("Jack");
+var faithThisWeek = document.getElementById("faithThisWeek");
+var jackThisWeek = document.getElementById("jackThisWeek");
+var faithNextWeek = document.getElementById("faithNextWeek");
+var jackNextWeek = document.getElementById("jackNextWeek");
 var footerPara = document.getElementById("footerPara");
 
 // cycleStartDate should be the day before week 1 starts (e.g. Sunday 2nd, if Monday 1st is the first day of week 1)
@@ -26,9 +28,9 @@ var millisecondsInADay = 1000 * 60 * 60 * 24;
 var dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 footerPara.innerHTML = "Today's date: " + today.toLocaleDateString('en-GB', dateOptions);
 
-function getWeekCycle (date) {
+function getWeekInCycle (date) {
 
-    dayDiff = Math.floor((today - cycleStartDate) / millisecondsInADay);
+    dayDiff = Math.floor((today - date) / millisecondsInADay);
 
     // Rota completes a cycle in 4 weeks. 7 * 4 = number of days in a cycle.
     // dayDiff % (7 * 4) is therefore number of complete days since current cycle started.
@@ -47,45 +49,55 @@ function getWeekCycle (date) {
     }
 
     return cycleWeek;
-};
+}
 
-var cycleWeek = getWeekCycle(cycleStartDate);
+var weekInCycle = getWeekInCycle(cycleStartDate);
 
-// Assign each cleaner an ID to prevent names being hard written into code
-cleaners = {
-    1 : "Jack",
-    2 : "Faith"
-};
+function getNextWeekInCycle (week) {
+    week += 1;
+
+    if (week > 4) {
+        week -= 4;
+    }
+
+    return week;
+}
+
+var nextWeekInCycle = getNextWeekInCycle(weekInCycle);
+
+function getLastWeekInCycle (week) {
+    week -= 1;
+
+    if (week < 1) {
+        week += 4;
+    }
+
+    return week;
+}
+
+var lastWeekInCycle = getLastWeekInCycle(weekInCycle);
 
 // Create empty rooms array. Each room will be added to the array by the room constructor.
 var rooms = [];
 
 class room {
-    constructor(roomName, firstCleaner, secondCleaner, week) {
+    constructor(roomName, firstCleaner, secondCleaner) {
+        
         this.roomName = roomName;
 
-        // Each cleaner cleans each room 2 weeks in a row
-        if ([1, 2].includes(week)) {
-            this.cleanerID = firstCleaner;
-        } else if ([3, 4].includes(week)) {
-            this.cleanerID = secondCleaner;
+        this.cleaningSchedule = {
+            1 : {cleanerID : firstCleaner, cleanLevel : 'deep'},
+            2 : {cleanerID : firstCleaner, cleanLevel : 'quick'},
+            3 : {cleanerID : secondCleaner, cleanLevel : 'deep'},
+            4 : {cleanerID : secondCleaner, cleanLevel : 'quick'}
         }
-
-        // Each cleaner alternates between a deep clean and a quick clean each week
-        if ([1, 3].includes(week)) {
-            this.cleanLevel = "deep";
-        } else if ([2, 4].includes(week)) {
-            this.cleanLevel = "quick";
-        }
-
-        this.cleanerName = cleaners[this.cleanerID];
 
         rooms.push(this);
     }
-};
+}
 
-kitchen = new room('Kitchen', 1, 2, cycleWeek);
-bathroom = new room('Bathroom', 2, 1, cycleWeek);
+kitchen = new room('Kitchen', 1, 2);
+bathroom = new room('Bathroom', 2, 1);
 
 class cleaner {
     constructor(name, ID) {
@@ -93,14 +105,28 @@ class cleaner {
         this.ID = ID;
     }
 
-    getCleaningString() {
-        var cleaningString = 'This week:<ul>';
+    getCleaningStringInWeek(week) {
+        if (week == lastWeekInCycle) {
+            var cleaningString = 'Last week:<ul>';
+        } else if (week == weekInCycle) {
+            var cleaningString = 'This week:<ul>';
+        } else if (week == nextWeekInCycle) {
+            var cleaningString = 'Next week:<ul>';
+        } else {
+            console.log("Could not generate initial cleaningString.");
+            console.log("week: " + week);
+            console.log("lastWeekInCycle: " + lastWeekInCycle);
+            console.log("nextWeekInCycle: " + nextWeekInCycle);
+            console.log("weekInCycle: " + weekInCycle);
+        }
+
         rooms.forEach(element => {
-            if (this.ID == element.cleanerID) {
-                cleaningString += '<li>' + element.roomName + ', ' + element.cleanLevel + ' clean.</li>';
+            if (this.ID == element.cleaningSchedule[week].cleanerID) {
+                cleaningString += '<li>' + element.roomName + ', ' + element.cleaningSchedule[week].cleanLevel + ' clean.</li>';
             }
         })
         cleaningString += '</ul>';
+
         return cleaningString;
     }
 }
@@ -108,5 +134,8 @@ class cleaner {
 jack = new cleaner('Jack', 1);
 faith = new cleaner('Faith', 2);
 
-jackPara.innerHTML = jack.getCleaningString();
-faithPara.innerHTML = faith.getCleaningString();
+jackThisWeek.innerHTML = jack.getCleaningStringInWeek(weekInCycle);
+faithThisWeek.innerHTML = faith.getCleaningStringInWeek(weekInCycle);
+
+jackNextWeek.innerHTML = jack.getCleaningStringInWeek(nextWeekInCycle);
+faithNextWeek.innerHTML = faith.getCleaningStringInWeek(nextWeekInCycle);
