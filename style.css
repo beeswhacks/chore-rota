@@ -29,7 +29,7 @@ header {
   margin-left: 5vw;
   margin-right: 5vw;
   margin-top: 5vw;
-  min-width: fit-content;
+  min-width: calc(100vw - margin-left - margin-right);
   padding: 2vw;
   text-align: left;
   width: calc(100vw - margin-left - margin-right);
@@ -48,9 +48,25 @@ header {
   justify-content: space-between;
   margin-bottom: 1vw;
   margin-top: 1vw;
+  overflow-x: auto;
+  /* overflow-y: hidden; */
+  scroll-snap-type: x mandatory;
 }
 
-.cleaningTasksThisWeek {
+.cleanerContent::-webkit-scrollbar {
+  display: none;
+}
+
+.cleaningTasks {
+  align-items: center;
+  display: flex;
+  margin: 0;
+  min-width: 100vw;
+  scroll-snap-align: start;
+  /* padding-left: 1hw; */
+} 
+
+/* .cleaningTasksThisWeek {
   flex-grow: 4;
   margin: 0;
   padding-right: 1hw;
@@ -60,7 +76,7 @@ header {
   flex-grow: 1;
   margin: 0;
   padding-left: 1hw;
-}
+} */
 
 #footer {
   border-top: 2px solid #0f1418;
