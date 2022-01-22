@@ -107,11 +107,11 @@ class cleaner {
 
     getCleaningStringInWeek(week) {
         if (week == lastWeekInCycle) {
-            var cleaningString = 'Last week:<ul>';
+            var cleaningString = 'Last week: ';
         } else if (week == weekInCycle) {
-            var cleaningString = 'This week:<ul>';
+            var cleaningString = 'This week: ';
         } else if (week == nextWeekInCycle) {
-            var cleaningString = 'Next week:<ul>';
+            var cleaningString = 'Next week: ';
         } else {
             console.log("Could not generate initial cleaningString.");
             console.log("week: " + week);
@@ -122,10 +122,9 @@ class cleaner {
 
         rooms.forEach(element => {
             if (this.ID == element.cleaningSchedule[week].cleanerID) {
-                cleaningString += '<li>' + element.roomName + ', ' + element.cleaningSchedule[week].cleanLevel + ' clean.</li>';
+                cleaningString += element.roomName + ', ' + element.cleaningSchedule[week].cleanLevel + ' clean.';
             }
         })
-        cleaningString += '</ul>';
 
         return cleaningString;
     }
@@ -134,8 +133,14 @@ class cleaner {
 jack = new cleaner('Jack', 1);
 faith = new cleaner('Faith', 2);
 
+jackLastWeek.innerHTML = jack.getCleaningStringInWeek(lastWeekInCycle);
+faithLastWeek.innerHTML = faith.getCleaningStringInWeek(lastWeekInCycle);
+
 jackThisWeek.innerHTML = jack.getCleaningStringInWeek(weekInCycle);
 faithThisWeek.innerHTML = faith.getCleaningStringInWeek(weekInCycle);
 
 jackNextWeek.innerHTML = jack.getCleaningStringInWeek(nextWeekInCycle);
 faithNextWeek.innerHTML = faith.getCleaningStringInWeek(nextWeekInCycle);
+
+jackThisWeek.scrollIntoView();
+faithThisWeek.scrollIntoView();

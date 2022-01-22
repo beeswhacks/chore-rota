@@ -7,6 +7,7 @@
 body {
   background-color: #182027;
   margin: 0;
+  height: 100vw;
 }
 
 header {
@@ -29,14 +30,13 @@ header {
   margin-left: 5vw;
   margin-right: 5vw;
   margin-top: 5vw;
-  min-width: calc(100vw - margin-left - margin-right);
-  padding: 2vw;
+  padding: 4vw;
   text-align: left;
   width: calc(100vw - margin-left - margin-right);
 }
 
 .cleanerName {
-  font-size: 14pt;
+  font-size: 16pt;
   font-weight: bold;
   margin-bottom: 1.5vw;
   text-align: left;
@@ -48,35 +48,30 @@ header {
   justify-content: space-between;
   margin-bottom: 1vw;
   margin-top: 1vw;
-  overflow-x: auto;
-  /* overflow-y: hidden; */
+  overflow-x: scroll;
+  scroll-snap-stop: always;
   scroll-snap-type: x mandatory;
 }
 
 .cleanerContent::-webkit-scrollbar {
-  display: none;
+  display: block;
+  height: 1vw;
+  background-color: #303d47;
+}
+
+.cleanerContent::-webkit-scrollbar-thumb {
+  background-color: white;
 }
 
 .cleaningTasks {
   align-items: center;
   display: flex;
-  margin: 0;
-  min-width: 100vw;
+  margin-top: 3vw;
+  padding-top: 3vw;
+  padding-bottom: 3vw;
+  min-width: 82vw;
   scroll-snap-align: start;
-  /* padding-left: 1hw; */
 } 
-
-/* .cleaningTasksThisWeek {
-  flex-grow: 4;
-  margin: 0;
-  padding-right: 1hw;
-}
-
-.cleaningTasksNextWeek {
-  flex-grow: 1;
-  margin: 0;
-  padding-left: 1hw;
-} */
 
 #footer {
   border-top: 2px solid #0f1418;
