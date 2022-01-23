@@ -8,10 +8,12 @@ var footerPara = document.getElementById("footerPara");
 var cycleStartDate = new Date("2021-10-31");
 var today = new Date(Date.now());
 
+// the numbers refer to the remainder when the number of days since the seed date is divided by the length of the
+// cycle (28 days). The last day in week 4 is 0 because 28/28 leaves a remainder of 0.
 daysInWeek1 = [1, 2, 3, 4, 5, 6, 7];
 daysInWeek2 = [8, 9, 10, 11, 12, 13, 14];
 daysInWeek3 = [15, 16, 17, 18, 19, 20, 21];
-daysInWeek4 = [22, 23, 24, 25, 26, 27, 28];
+daysInWeek4 = [22, 23, 24, 25, 26, 27, 0];
 
 var startWeek1 = daysInWeek1[0];
 var startWeek2 = daysInWeek2[0];
